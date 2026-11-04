@@ -1,0 +1,9 @@
+MATH ARENA - APP PER IPHONE
+
+1. Carica TUTTI i file della cartella su un hosting HTTPS (es. GitHub Pages o Netlify).
+2. Apri l’indirizzo in Safari su iPhone.
+3. Premi Condividi → Aggiungi alla schermata Home → Apri come app.
+4. Esportazione: scegli iPhone 540×960 30 FPS; al termine premi Condividi / Salva video.
+5. iOS/Safari potrebbe non supportare MediaRecorder o il codec MP4: l'app segnala il problema senza fingere di aver esportato MP4.
+
+Importante: la versione qui convertita mantiene le regole e il motore originale del file fornito, incluso il suo modello di sciame approssimato oltre 280 palline. NON è una simulazione fisica esatta per milioni di palline.
