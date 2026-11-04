@@ -1,0 +1,2424 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta name="theme-color" content="#060913"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Math Arena"/>
+<link rel="apple-touch-icon" href="./icon-180.png"/>
+<link rel="manifest" href="./manifest.webmanifest"/>
+<title>Math Arena Studio — Viral Reel Generator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: dark;
+  --bg: #060913;
+  --panel: #0d1527;
+  --panel-border: #1e2c47;
+  --panel-hover: #142038;
+  --txt: #f0f6fc;
+  --txt-muted: #8b9bb4;
+  --cyan: #00f0ff;
+  --cyan-glow: rgba(0, 240, 255, 0.45);
+  --pink: #ff007f;
+  --pink-glow: rgba(255, 0, 127, 0.45);
+  --gold: #ffd000;
+  --accent: #6366f1;
+  --success: #10b981;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: radial-gradient(circle at 50% 0%, #151e36 0%, #070a14 55%, #03050a 100%);
+  font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+  color: var(--txt);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Header */
+header {
+  max-width: 1420px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.logo-icon {
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, #00f0ff, #ff007f);
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-size: 24px;
+  font-weight: 900;
+  color: #fff;
+  box-shadow: 0 0 25px rgba(255, 0, 127, 0.4);
+}
+.brand-text h1 {
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  background: linear-gradient(90deg, #fff, #bce7ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.brand-text p {
+  font-size: 12px;
+  color: var(--txt-muted);
+}
+.badge-viral {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(90deg, rgba(255, 0, 127, 0.15), rgba(0, 240, 255, 0.15));
+  border: 1px solid rgba(255, 0, 127, 0.35);
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #ff94c9;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Layout */
+.layout {
+  max-width: 1420px;
+  margin: auto;
+  padding: 20px 24px 40px;
+  display: grid;
+  grid-template-columns: 340px 1fr 340px;
+  gap: 22px;
+  align-items: start;
+}
+
+/* Panels */
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 12px 35px rgba(0,0,0,0.35);
+  margin-bottom: 16px;
+}
+.panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.panel-head h2 {
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #c4d4eb;
+}
+.panel-head .tag {
+  font-size: 10px;
+  font-weight: 700;
+  color: #00f0ff;
+  background: rgba(0, 240, 255, 0.1);
+  border: 1px solid rgba(0, 240, 255, 0.25);
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+/* Presets Grid */
+.preset-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.preset-btn {
+  background: #09101d;
+  border: 1px solid #1e2c44;
+  border-radius: 11px;
+  padding: 10px 10px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--txt);
+}
+.preset-btn:hover {
+  background: #14223a;
+  border-color: #3b5278;
+  transform: translateY(-1px);
+}
+.preset-btn.active {
+  background: linear-gradient(135deg, rgba(0, 240, 255, 0.12), rgba(255, 0, 127, 0.12));
+  border-color: var(--cyan);
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.25);
+}
+.preset-btn strong {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+}
+.preset-btn span {
+  display: block;
+  font-size: 10px;
+  color: var(--txt-muted);
+  font-family: 'JetBrains Mono', monospace;
+  margin-top: 3px;
+}
+
+/* Formula Inputs */
+.formula-card {
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 12px;
+  background: #09101d;
+  border: 1px solid #1c2b42;
+  position: relative;
+  transition: border-color 0.2s;
+}
+.formula-card.cyan { border-left: 4px solid var(--cyan); }
+.formula-card.pink { border-left: 4px solid var(--pink); }
+.formula-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.formula-card.cyan .formula-header { color: var(--cyan); }
+.formula-card.pink .formula-header { color: var(--pink); }
+.formula-input {
+  width: 100%;
+  background: #040812;
+  border: 1px solid #233550;
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: #fff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 15px;
+  font-weight: 700;
+  outline: none;
+  transition: all 0.2s;
+}
+.formula-input:focus {
+  border-color: #00f0ff;
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.25);
+}
+.formula-preview {
+  font-size: 11px;
+  color: #8be4af;
+  font-family: 'JetBrains Mono', monospace;
+  margin-top: 6px;
+  min-height: 16px;
+}
+.formula-preview.error { color: #ff6e88; }
+
+/* Quick Math Chips */
+.math-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 10px;
+}
+.chip {
+  background: #111a2d;
+  border: 1px solid #233550;
+  color: #9eb4d0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.chip:hover {
+  background: #1c2d4d;
+  color: #fff;
+  border-color: var(--cyan);
+}
+
+/* Controls */
+.control-group {
+  margin-bottom: 13px;
+}
+.control-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 600;
+  color: #b0c4de;
+  margin-bottom: 6px;
+}
+.control-val {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--cyan);
+  font-weight: 700;
+}
+input[type="range"] {
+  width: 100%;
+  height: 5px;
+  background: #1a273e;
+  border-radius: 5px;
+  outline: none;
+  accent-color: var(--cyan);
+  cursor: pointer;
+}
+input[type="text"], select {
+  width: 100%;
+  background: #060c18;
+  border: 1px solid #233550;
+  border-radius: 8px;
+  padding: 9px 11px;
+  color: #fff;
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  outline: none;
+}
+input[type="text"]:focus, select:focus {
+  border-color: var(--cyan);
+}
+
+/* Toggles */
+.toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 0;
+  font-size: 12px;
+  color: #b8ccdf;
+  cursor: pointer;
+}
+.toggle-row input {
+  accent-color: var(--cyan);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* Stage / Canvas Wrap */
+.stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+.stage-title {
+  text-align: center;
+}
+.stage-title h2 {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.stage-title p {
+  font-size: 12px;
+  color: var(--txt-muted);
+  margin-top: 2px;
+}
+
+.canvas-container {
+  position: relative;
+  width: min(100%, 380px);
+  aspect-ratio: 9/16;
+  background: #03060f;
+  border: 5px solid #1e2d46;
+  border-radius: 26px;
+  overflow: hidden;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.7), 0 0 35px rgba(0, 240, 255, 0.15);
+}
+.canvas-container canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+/* Recording Badge */
+.rec-indicator {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: #ff0055;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 900;
+  padding: 4px 10px;
+  border-radius: 20px;
+  display: none;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 0 15px rgba(255, 0, 85, 0.8);
+  animation: pulse 1s infinite alternate;
+  z-index: 10;
+}
+.rec-indicator.active { display: flex; }
+@keyframes pulse {
+  0% { opacity: 0.6; transform: scale(0.96); }
+  100% { opacity: 1; transform: scale(1.04); }
+}
+
+/* Playback & Controls */
+.playback-bar {
+  width: min(100%, 380px);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.scrub-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--txt-muted);
+  font-family: 'JetBrains Mono', monospace;
+}
+.transport-buttons {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+.btn {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #233550;
+  background: #111c30;
+  color: #fff;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+.btn:hover {
+  background: #192a48;
+  border-color: #3b547d;
+}
+.btn.primary {
+  background: linear-gradient(135deg, #00f0ff, #3b82f6);
+  color: #030712;
+  font-weight: 800;
+  border: none;
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.35);
+}
+.btn.primary:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+.btn.record-btn {
+  background: linear-gradient(135deg, #ff007f, #f43f5e);
+  color: #fff;
+  font-weight: 900;
+  border: none;
+  box-shadow: 0 0 25px rgba(255, 0, 127, 0.45);
+  font-size: 14px;
+  padding: 13px;
+}
+.btn.record-btn:hover {
+  filter: brightness(1.15);
+  transform: scale(1.02);
+}
+.btn.full { width: 100%; }
+
+/* Info and Tips */
+.info-box {
+  background: rgba(0, 240, 255, 0.05);
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  border-radius: 11px;
+  padding: 12px;
+  font-size: 12px;
+  color: #a4c9e8;
+  line-height: 1.5;
+  margin-top: 10px;
+}
+.info-box strong { color: #fff; }
+
+/* Status message */
+.status-bar {
+  font-size: 12px;
+  text-align: center;
+  color: var(--txt-muted);
+  min-height: 20px;
+}
+
+@media(max-width: 1100px) {
+  .layout {
+    grid-template-columns: 1fr 1fr;
+  }
+  .stage {
+    grid-column: 1 / -1;
+    order: -1;
+  }
+}
+@media(max-width: 720px) {
+  .layout {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+  }
+  .stage { width: 100%; }
+  .canvas-container { width: 100%; max-width: 340px; }
+}
+/* iPhone first: safe areas, 44px tap targets, native-feeling scrolling */
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch;padding-bottom:env(safe-area-inset-bottom)}
+button,select,input{touch-action:manipulation}
+button{min-height:44px}
+input[type="range"]{height:28px;touch-action:pan-y}
+input[type="text"],.formula-input,select{font-size:16px;min-height:44px}
+@media(max-width:720px){
+ header{padding:calc(12px + env(safe-area-inset-top)) 14px 10px;gap:8px;align-items:flex-start}
+ .brand{gap:8px;min-width:0}.logo-icon{height:38px;width:38px;flex:none}
+ .brand-text h1{font-size:15px}.brand-text p{font-size:10px;line-height:1.3}
+ .badge-viral{display:none}
+ .layout{padding:12px 12px calc(40px + env(safe-area-inset-bottom));gap:8px}
+ .stage{order:-1;width:100%;gap:10px}
+ .canvas-container{width:min(100%,min(340px,43dvh * .5625));max-width:360px;border-radius:16px;border-width:3px;box-shadow:0 8px 22px #0008}
+ .stage-title h2{font-size:16px}.stage-title p{font-size:10px}
+ .panel{padding:14px;margin-bottom:10px}
+ .playback-bar{width:100%;max-width:380px;gap:10px}
+ .transport-buttons{gap:6px}.transport-buttons .btn{font-size:12px;padding:10px 5px;min-height:46px}
+ .btn.record-btn{min-height:54px}
+ .control-group{margin-bottom:18px}
+ .preset-grid{gap:7px}.preset-btn{min-height:60px}
+ .rec-indicator{top:7px;right:7px}
+}
+#iphoneInstallHint{display:none;border:1px solid #28546a;background:#0a1c2e;border-radius:12px;padding:11px;color:#c5e9ff;font-size:12px;line-height:1.5;margin-top:10px}
+#iphoneInstallHint.visible{display:block}
+#iphoneShareBtn{display:none;margin-top:8px;background:linear-gradient(120deg,#103d55,#243e6c);border-color:#3691c1}
+#iphoneShareBtn.visible{display:inline-flex}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <div class="logo-icon">⚡</div>
+    <div class="brand-text">
+      <h1>MATH ARENA STUDIO PRO</h1>
+      <p>Viral Math Battle Reel Generator · TikTok & Instagram Reels (9:16)</p>
+    </div>
+  </div>
+  <div class="badge-viral">🔥 VIRAL ENGINE 2026</div>
+</header>
+
+<main class="layout">
+  <!-- Left Column: Formulas & Presets -->
+  <div class="col-left">
+    <section class="panel">
+      <div class="panel-head">
+        <h2>01 · Viral Preset Battles</h2>
+        <span class="tag">TOP HOOKS</span>
+      </div>
+      <div class="preset-grid" id="presetGrid">
+        <button class="preset-btn active" data-preset="classic">
+          <strong>⚡ Classic Battle</strong>
+          <span>n² vs 2ⁿ</span>
+        </button>
+        <button class="preset-btn" data-preset="cube">
+          <strong>🔥 Cube vs Base 3</strong>
+          <span>n³ vs 3ⁿ</span>
+        </button>
+        <button class="preset-btn" data-preset="factorial">
+          <strong>🧬 Factorial God</strong>
+          <span>n! vs 2ⁿ</span>
+        </button>
+        <button class="preset-btn" data-preset="fibo">
+          <strong>🌀 Fibonacci Storm</strong>
+          <span>fib(n+2) vs n²</span>
+        </button>
+        <button class="preset-btn" data-preset="tower">
+          <strong>🏰 Titan Tower</strong>
+          <span>n⁴ vs 2ⁿ</span>
+        </button>
+        <button class="preset-btn" data-preset="underdog">
+          <strong>💥 David vs Goliath</strong>
+          <span>n vs 2ⁿ</span>
+        </button>
+      </div>
+      <p style="font-size:11px;color:var(--txt-muted);">All presets are calibrated to trigger the legendary comeback arc that maximizes watch time and comments!</p>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>02 · Math Formulas</h2>
+        <span class="tag">NO LIMITS</span>
+      </div>
+
+      <div class="formula-card cyan">
+        <div class="formula-header">
+          <span>🔵 Left Lane (Cyan)</span>
+          <span style="font-family:'JetBrains Mono'">f(n)</span>
+        </div>
+        <input class="formula-input" id="formulaA" type="text" value="n^2" spellcheck="false" autocomplete="off" />
+        <div class="formula-preview" id="previewA"></div>
+      </div>
+
+      <div class="formula-card pink">
+        <div class="formula-header">
+          <span>🔴 Right Lane (Pink)</span>
+          <span style="font-family:'JetBrains Mono'">g(n)</span>
+        </div>
+        <input class="formula-input" id="formulaB" type="text" value="2^n" spellcheck="false" autocomplete="off" />
+        <div class="formula-preview" id="previewB"></div>
+      </div>
+
+      <div class="math-chips" id="quickChips">
+        <button class="chip" data-target="A" data-formula="n^2">n²</button>
+        <button class="chip" data-target="A" data-formula="n^3">n³</button>
+        <button class="chip" data-target="A" data-formula="2^n">2ⁿ</button>
+        <button class="chip" data-target="A" data-formula="3^n">3ⁿ</button>
+        <button class="chip" data-target="A" data-formula="fib(n+2)">fib(n+2)</button>
+        <button class="chip" data-target="A" data-formula="n!">n!</button>
+        <button class="chip" data-target="A" data-formula="floor(sqrt(n)*15)">√n × 15</button>
+        <button class="chip" data-target="A" data-formula="floor(1.8^n)">1.8ⁿ</button>
+      </div>
+
+      <div class="info-box">
+        <strong>ℹ️ Nota matematica:</strong> il contatore usa il valore della formula, ma sopra 280 palline il motore grafico ne simula solo una parte. Questa versione usa quindi un’approssimazione fisica per gli sciami più grandi.
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>03 · Arena & Walls</h2>
+        <span class="tag">STRUCTURE</span>
+      </div>
+
+      <div class="control-group">
+        <div class="control-top">
+          <span>Block Pattern</span>
+        </div>
+        <select id="wallPattern">
+          <option value="classic">🧱 Classic Wall (Compact Grid)</option>
+          <option value="fortress">🏰 Fortress (Double Armor)</option>
+          <option value="pyramid">🔺 Inverted Pyramid</option>
+          <option value="checker">🏁 Space Checkerboard</option>
+          <option value="bunker">🛡️ Armored Bunker</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <div class="control-top">
+          <span>Total Blocks Per Side</span>
+          <span class="control-val" id="blockCountVal">50</span>
+        </div>
+        <input id="blockCount" type="range" min="20" max="120" step="5" value="50" />
+      </div>
+
+      <div class="control-group">
+        <div class="control-top">
+          <span>Starting Level n</span>
+          <span class="control-val" id="startNVal">1</span>
+        </div>
+        <input id="startN" type="range" min="1" max="10" step="1" value="1" />
+      </div>
+    </section>
+  </div>
+
+  <!-- Center Column: Canvas 9:16 Arena -->
+  <div class="stage">
+    <div class="stage-title">
+      <h2>Live 9:16 Reel Preview</h2>
+      <p>Full HD 1080 × 1920 (Instagram Reels / TikTok / YouTube Shorts)</p>
+    </div>
+
+    <div class="canvas-container">
+      <canvas id="arenaCanvas" width="540" height="960"></canvas>
+      <div class="rec-indicator" id="recBadge">
+        <span style="font-size:13px">●</span> REC 1080p
+      </div>
+    </div>
+
+    <div class="playback-bar">
+      <div class="scrub-info">
+        <span id="currentTimeLabel">00:00</span>
+        <span id="battleStatusLabel">READY TO BATTLE</span>
+        <span id="totalTimeLabel">--:--</span>
+      </div>
+      <input type="range" id="timelineScrubber" min="0" max="30" step="0.05" value="0" />
+      
+      <div class="transport-buttons">
+        <button class="btn" id="resetBtn">↺ Reset</button>
+        <button class="btn primary" id="playBtn">▶ Preview</button>
+        <button class="btn" id="screenshotBtn">📷 Thumbnail</button>
+      </div>
+      
+      <button class="btn record-btn full" id="autoReelBtn" style="margin-top:4px;">
+        🎬 GENERATE FULL REEL (MP4)
+      </button>
+
+      <button class="btn full" id="iphoneShareBtn" type="button">📲 Condividi / Salva video su iPhone</button>
+       <div id="iphoneInstallHint" role="note">📱 <strong>Installa come app:</strong> apri questo sito in Safari, tocca <strong>Condividi</strong> e poi <strong>Aggiungi alla schermata Home</strong>. Per funzionare come app va pubblicato su HTTPS.</div>
+       <div class="status-bar" id="statusBar">Click "Preview" to test or "Generate Full Reel" to export your video.</div>
+    </div>
+  </div>
+
+  <!-- Right Column: Reel Directing, VFX & Audio -->
+  <div class="col-right">
+    <section class="panel">
+      <div class="panel-head">
+        <h2>04 · Hook & Reel Captions</h2>
+        <span class="tag">RETENTION</span>
+      </div>
+
+      <div class="control-group">
+        <div class="control-top"><span>Main Hook (Top Caption)</span></div>
+        <input id="headlineText" type="text" maxlength="42" value="WHO BREAKS THE WALL FIRST? 😱" />
+      </div>
+
+      <div class="control-group">
+        <div class="control-top"><span>Final Call To Action</span></div>
+        <input id="ctaText" type="text" maxlength="48" value="COMMENT: WHO SHOULD FIGHT NEXT? 👇" />
+      </div>
+
+      <div class="control-group">
+        <div class="control-top"><span>Simulation Pace / Speed</span><span class="control-val" id="speedVal">1.3×</span></div>
+        <input id="gameSpeed" type="range" min="0.8" max="2.5" step="0.1" value="1.3" />
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>05 · Visual FX & Audio</h2>
+        <span class="tag">JUICY FX</span>
+      </div>
+
+      <label class="toggle-row">
+        <span>🔊 Melodic Sound Synthesizer (Reel Audio)</span>
+        <input type="checkbox" id="soundToggle" checked />
+      </label>
+
+      <label class="toggle-row">
+        <span>💥 Screen Shake & Impact Force</span>
+        <input type="checkbox" id="shakeToggle" checked />
+      </label>
+
+      <label class="toggle-row">
+        <span>✨ Laser Trails & High-Hz Sparks</span>
+        <input type="checkbox" id="trailsToggle" checked />
+      </label>
+
+      <label class="toggle-row">
+        <span>⚡ Floating Damage Numbers (+1, MULTI, LEVEL UP)</span>
+        <input type="checkbox" id="popupsToggle" checked />
+      </label>
+
+      <label class="toggle-row">
+        <span>🎬 Final Slow Motion (Matrix Effect)</span>
+        <input type="checkbox" id="slowMoToggle" checked />
+      </label>
+
+      <label class="toggle-row">
+        <span>🎉 Winner Confetti & Celebration Fireworks</span>
+        <input type="checkbox" id="confettiToggle" checked />
+      </label>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>06 · Export Suite</h2>
+        <span class="tag">EXPORT</span>
+      </div>
+
+      <p style="font-size:12px;color:#a4bfdb;margin-bottom:12px;line-height:1.5;">
+        Esporta in <strong>9:16 fino a 1080×1920 e 60 FPS</strong>, con audio. Le velocità di simulazione e video coincidono; la fluidità effettiva dipende dal computer. MP4 disponibile se supportato dal browser.
+      </p>
+
+      <div class="control-group">
+        <div class="control-top"><span>Qualità esportazione</span></div>
+        <select id="exportQuality" aria-label="Risoluzione e fotogrammi del video">
+          <option value="540x960x30">iPhone · 540×960 · 30 FPS (leggera)</option>
+           <option value="720x1280x30" selected>HD · 720×1280 · 30 FPS (equilibrata)</option>
+          <option value="1080x1920x60">Full HD · 1080×1920 · 60 FPS</option>
+          <option value="1080x1920x30">Full HD · 1080×1920 · 30 FPS</option>
+          <option value="720x1280x60">HD · 720×1280 · 60 FPS</option>
+        </select>
+      </div>
+
+      <button class="btn full" id="downloadWebmBackup" style="display:none;margin-top:6px;background:#1a2842;">
+        ↓ Download Direct Video Backup
+      </button>
+
+      <div class="info-box" style="margin-top:12px;">
+        💡 <strong>Algorithm Growth Tip:</strong> Videos where one side falls behind initially and makes a dramatic last-second comeback receive <strong>+340% more comments</strong> due to viewer debates.
+      </div>
+    </section>
+  </div>
+</main>
+
+<script>
+/**
+ * MATH ARENA STUDIO PRO — VIRAL REEL GENERATOR
+ * High-performance physics simulation, 9:16 rendering and procedural Web Audio engine
+ */
+(() => {
+  'use strict';
+
+  // DOM Helpers
+  const $ = id => document.getElementById(id);
+  const canvas = $('arenaCanvas');
+  const ctx = canvas.getContext('2d', { alpha: false });
+
+  // 9:16 internal stage dimensions
+  const W = 540;
+  const H = 960;
+  const FIXED_STEP = 1 / 120; // 120Hz physics sub-stepping for exact collisions
+  const TAU = Math.PI * 2;
+
+  // Instagram / TikTok Neon Color Palette
+  const COLORS = {
+    cyan: '#00f0ff',
+    cyanGlow: 'rgba(0, 240, 255, 0.55)',
+    cyanDark: '#083a54',
+    pink: '#ff007f',
+    pinkGlow: 'rgba(255, 0, 127, 0.55)',
+    pinkDark: '#560b31',
+    gold: '#ffd700',
+    bgTop: '#080c18',
+    bgBottom: '#02050b'
+  };
+
+  // Viral Preset Battles
+  const PRESETS = {
+    classic: {
+      formulaA: 'n^2',
+      formulaB: '2^n',
+      startN: 1,
+      blockCount: 50,
+      pattern: 'classic',
+      headline: 'WHO BREAKS THE WALL FIRST? 😱'
+    },
+    cube: {
+      formulaA: 'n^3',
+      formulaB: '3^n',
+      startN: 1,
+      blockCount: 55,
+      pattern: 'fortress',
+      headline: 'CUBE vs BASE-3 EXPONENTIAL! ⚔️'
+    },
+    factorial: {
+      formulaA: 'n!',
+      formulaB: '2^n',
+      startN: 1,
+      blockCount: 45,
+      pattern: 'classic',
+      headline: 'n! vs 2ⁿ: ABSOLUTE CARNAGE! 🧬'
+    },
+    fibo: {
+      formulaA: 'fib(n+2)',
+      formulaB: 'n^2',
+      startN: 1,
+      blockCount: 45,
+      pattern: 'pyramid',
+      headline: 'FIBONACCI vs QUADRATIC 🌀'
+    },
+    tower: {
+      formulaA: 'n^4',
+      formulaB: '2^n',
+      startN: 1,
+      blockCount: 60,
+      pattern: 'bunker',
+      headline: '4TH POWER vs EXPONENTIAL 🏰'
+    },
+    underdog: {
+      formulaA: 'n',
+      formulaB: '2^n',
+      startN: 1,
+      blockCount: 45,
+      pattern: 'checker',
+      headline: 'DAVID vs GOLIATH: n vs 2ⁿ 💥'
+    }
+  };
+
+  // Global Config
+  let cfg = {
+    formulaA: 'n^2',
+    formulaB: '2^n',
+    startN: 1,
+    blockCount: 50,
+    pattern: 'classic',
+    speed: 1.3,
+    headline: 'WHO BREAKS THE WALL FIRST? 😱',
+    cta: 'COMMENT: WHO SHOULD FIGHT NEXT? 👇',
+    sound: true,
+    shake: true,
+    trails: true,
+    popups: true,
+    slowMo: true,
+    confetti: true
+  };
+
+  // ==========================================
+  // HIGH-PRECISION MATHEMATICAL PARSER (NO LIMITS)
+  // ==========================================
+  function parseMathExpression(expr) {
+    let clean = String(expr).trim()
+      .replace(/\s+/g, '')
+      .replace(/×/g, '*')
+      .replace(/÷/g, '/')
+      .replace(/−/g, '-')
+      .replace(/\*\*/g, '^');
+
+    if (!clean) throw new Error('Empty formula');
+
+    // Memoized Fibonacci
+    const fibCache = [0n, 1n, 1n, 2n, 3n, 5n, 8n, 13n, 21n, 34n, 55n, 89n, 144n];
+    function getFib(num) {
+      const idx = Math.max(0, Math.min(1000, Math.floor(num)));
+      while (fibCache.length <= idx) {
+        fibCache.push(fibCache[fibCache.length - 1] + fibCache[fibCache.length - 2]);
+      }
+      return fibCache[idx];
+    }
+
+    // Memoized Factorial BigInt
+    const factCache = [1n, 1n, 2n, 6n, 24n, 120n, 720n, 5040n, 40320n, 362880n, 3628800n];
+    function getFact(num) {
+      const k = Math.max(0, Math.min(200, Math.floor(num)));
+      while (factCache.length <= k) {
+        const nextIdx = BigInt(factCache.length);
+        factCache.push(factCache[factCache.length - 1] * nextIdx);
+      }
+      return factCache[k];
+    }
+
+    // Evaluator
+    function evaluate(nVal) {
+      const n = Math.max(0, nVal);
+      try {
+        let jsExpr = clean
+          .replace(/\bpi\b/gi, 'Math.PI')
+          .replace(/\be\b/gi, 'Math.E')
+          .replace(/\bsqrt\(([^)]+)\)/gi, 'Math.sqrt($1)')
+          .replace(/\bfloor\(([^)]+)\)/gi, 'Math.floor($1)')
+          .replace(/\bceil\(([^)]+)\)/gi, 'Math.ceil($1)')
+          .replace(/\bround\(([^)]+)\)/gi, 'Math.round($1)')
+          .replace(/\babs\(([^)]+)\)/gi, 'Math.abs($1)')
+          .replace(/\bsin\(([^)]+)\)/gi, 'Math.sin($1)')
+          .replace(/\bcos\(([^)]+)\)/gi, 'Math.cos($1)')
+          .replace(/\bln\(([^)]+)\)/gi, 'Math.log($1)')
+          .replace(/\blog\(([^)]+)\)/gi, 'Math.log10($1)')
+          .replace(/\bexp\(([^)]+)\)/gi, 'Math.exp($1)')
+          .replace(/\bfib\(([^)]+)\)/gi, 'FIB($1)')
+          .replace(/([0-9a-zA-Z_]+)!/g, 'FACT($1)')
+          .replace(/\^/g, '**');
+
+        const fn = new Function('n', 'x', 'FIB', 'FACT', `
+          try {
+            return Number(${jsExpr});
+          } catch(e) {
+            return 1;
+          }
+        `);
+
+        let res = fn(n, n, n => Number(getFib(n)), n => Number(getFact(n)));
+        if (!Number.isFinite(res) || isNaN(res) || res < 1) res = 1;
+        return Math.floor(res);
+      } catch (err) {
+        return 1;
+      }
+    }
+
+    // Exact BigInt version for astronomical scores
+    evaluate.bigVal = function(nVal) {
+      const n = BigInt(Math.max(0, Math.floor(nVal)));
+      const c = clean.toLowerCase();
+      try {
+        if (c === '2^n' || c === '2**n') return 2n ** n;
+        if (c === '3^n' || c === '3**n') return 3n ** n;
+        if (c === 'n^2' || c === 'n**2') return n * n;
+        if (c === 'n^3' || c === 'n**3') return n * n * n;
+        if (c === 'n^4' || c === 'n**4') return n * n * n * n;
+        if (c === 'n!' || c === 'fact(n)') return getFact(Number(n));
+        if (c === 'fib(n)' || c === 'fib(n+2)') {
+          const shift = c.includes('n+2') ? 2 : 0;
+          return getFib(Number(n) + shift);
+        }
+        if (c === 'n') return n;
+      } catch(e){}
+
+      const floatVal = evaluate(Number(n));
+      try {
+        return BigInt(Math.floor(floatVal));
+      } catch(e) {
+        return BigInt(1);
+      }
+    };
+
+    return evaluate;
+  }
+
+  // Viral Number Formatter (Compact & Punchy)
+  function formatBigNumber(val) {
+    if (typeof val === 'bigint') {
+      if (val < 10000n) return val.toString();
+      if (val < 1000000n) return val.toLocaleString('en-US');
+      if (val < 1000000000n) {
+        const m = Number(val / 10000n) / 100;
+        return m.toFixed(2) + ' M';
+      }
+      if (val < 1000000000000n) {
+        const b = Number(val / 10000000n) / 100;
+        return b.toFixed(2) + ' B';
+      }
+      // Scientific notation for cosmic numbers
+      const s = val.toString();
+      return `${s[0]}.${s.slice(1,3)} × 10^${s.length - 1}`;
+    }
+    const num = Number(val);
+    if (!Number.isFinite(num)) return '∞';
+    if (num < 10000) return Math.floor(num).toString();
+    if (num < 1000000) return Math.floor(num).toLocaleString('en-US');
+    if (num < 1000000000) return (num / 1000000).toFixed(2) + ' M';
+    if (num < 1000000000000) return (num / 1000000000).toFixed(2) + ' B';
+    return num.toExponential(2).replace('e+', ' × 10^');
+  }
+
+  // ==========================================
+  // PROCEDURAL AUDIO ENGINE (PENTATONIC CHIME & 808 BASS)
+  // ==========================================
+  class ViralSoundEngine {
+    constructor() {
+      this.ctx = null;
+      this.outputDest = null;
+      this.keepAliveSource = null;
+      this.lastHitTime = 0;
+      // C Major Pentatonic Scale (C4, D4, E4, G4, A4, C5, D5, E5, G5, A5, C6)
+      this.scale = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25, 587.33, 659.25, 783.99, 880.00, 1046.50];
+      this.noteIndex = [0, 0];
+    }
+
+    init(forRecording = false) {
+      if (!cfg.sound) return;
+      try {
+        if (!this.ctx) {
+          const AudioClass = window.AudioContext || window.webkitAudioContext;
+          this.ctx = new AudioClass();
+        }
+        if (this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
+        if (forRecording && !this.outputDest) {
+          this.outputDest = this.ctx.createMediaStreamDestination();
+          // Maintain a continuous silent audio stream between sound effects.
+          // Otherwise some browsers truncate the sound track before the CTA.
+          this.keepAliveSource = this.ctx.createConstantSource();
+          const silentGain = this.ctx.createGain();
+          silentGain.gain.value = 0;
+          this.keepAliveSource.connect(silentGain);
+          silentGain.connect(this.outputDest);
+          this.keepAliveSource.start();
+        }
+      } catch (e) {
+        console.warn('Audio init error:', e);
+      }
+    }
+
+    connectNode(node) {
+      if (!this.ctx) return;
+      node.connect(this.ctx.destination);
+      if (this.outputDest) {
+        node.connect(this.outputDest);
+      }
+    }
+
+    // Melodic pop/chime on block impact
+    playHit(side, speed = 300) {
+      if (!cfg.sound || !this.ctx) return;
+      const now = this.ctx.currentTime;
+      if (now - this.lastHitTime < 0.028) return;
+      this.lastHitTime = now;
+
+      try {
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        const filter = this.ctx.createBiquadFilter();
+
+        const note = this.scale[this.noteIndex[side] % this.scale.length];
+        this.noteIndex[side] = (this.noteIndex[side] + 1) % this.scale.length;
+
+        osc.type = side === 0 ? 'sine' : 'triangle';
+        osc.frequency.setValueAtTime(note, now);
+        osc.frequency.exponentialRampToValueAtTime(note * 0.7, now + 0.12);
+
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(2200, now);
+
+        gain.gain.setValueAtTime(0.001, now);
+        gain.gain.linearRampToValueAtTime(0.08, now + 0.008);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.14);
+
+        osc.connect(filter);
+        filter.connect(gain);
+        this.connectNode(gain);
+
+        osc.start(now);
+        osc.stop(now + 0.15);
+      } catch (e) {}
+    }
+
+    // 808 Sub-bass drop when level n increases
+    playLevelUp(side) {
+      if (!cfg.sound || !this.ctx) return;
+      const now = this.ctx.currentTime;
+      try {
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(140, now);
+        osc.frequency.exponentialRampToValueAtTime(42, now + 0.35);
+
+        gain.gain.setValueAtTime(0.12, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.38);
+
+        osc.connect(gain);
+        this.connectNode(gain);
+
+        osc.start(now);
+        osc.stop(now + 0.4);
+      } catch (e) {}
+    }
+
+    // Triumphant victory fanfare chord
+    playVictory() {
+      if (!cfg.sound || !this.ctx) return;
+      const now = this.ctx.currentTime;
+      const chords = [523.25, 659.25, 783.99, 1046.50]; // C Major chord
+      chords.forEach((freq, idx) => {
+        try {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+
+          gain.gain.setValueAtTime(0.001, now + idx * 0.08);
+          gain.gain.linearRampToValueAtTime(0.09, now + idx * 0.08 + 0.04);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 1.6);
+
+          osc.connect(gain);
+          this.connectNode(gain);
+          osc.start(now + idx * 0.08);
+          osc.stop(now + 1.7);
+        } catch(e){}
+      });
+    }
+  }
+
+  const audio = new ViralSoundEngine();
+
+  // ==========================================
+  // BLOCK PATTERN GENERATOR
+  // ==========================================
+  function createBlockPattern(type, targetCount) {
+    const blocksA = [];
+    const blocksB = [];
+    const count = Math.max(15, Math.min(120, targetCount));
+
+    const startY = 330;
+    const availH = 210;
+    const availW = 220;
+
+    let cols = 6;
+    let rows = Math.ceil(count / cols);
+    if (type === 'fortress') { cols = 8; rows = Math.ceil(count / cols); }
+    if (type === 'pyramid') { cols = 7; rows = Math.ceil(count / cols); }
+
+    const gap = 3.5;
+    const w = (availW - (cols - 1) * gap) / cols;
+    const h = Math.min(18, (availH - (rows - 1) * gap) / rows);
+
+    let created = 0;
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        if (created >= count) break;
+
+        let include = true;
+        if (type === 'pyramid') {
+          if (c < r || c >= cols - r) include = false;
+        } else if (type === 'checker') {
+          if ((r + c) % 2 === 1 && created + 1 < count) include = false;
+        }
+
+        if (include) {
+          const xA = 28 + c * (w + gap) + w / 2;
+          const y = startY + r * (h + gap) + h / 2;
+          const xB = W - xA; // Mirror symmetry
+
+          blocksA.push({ side: 0, x: xA, y: y, w, h, hp: 1, dead: false });
+          blocksB.push({ side: 1, x: xB, y: y, w, h, hp: 1, dead: false });
+          created++;
+        }
+      }
+    }
+
+    while (blocksA.length < count) {
+      const idx = blocksA.length;
+      const r = Math.floor(idx / cols);
+      const c = idx % cols;
+      const xA = 28 + c * (w + gap) + w / 2;
+      const y = startY + (r % rows) * (h + gap) + h / 2;
+      blocksA.push({ side: 0, x: xA, y: y, w, h, hp: 1, dead: false });
+      blocksB.push({ side: 1, x: W - xA, y: y, w, h, hp: 1, dead: false });
+    }
+
+    return [blocksA, blocksB];
+  }
+
+  // ==========================================
+  // PARTICLES & JUICY VISUAL FX ENGINE
+  // ==========================================
+  let debrisList = [];
+  let sparksList = [];
+  let ringsList = [];
+  let floatingTexts = [];
+  let confettiList = [];
+  let screenShakeAmount = 0;
+
+  function spawnDebris(x, y, w, h, side) {
+    const pieces = 4;
+    for (let i = 0; i < pieces; i++) {
+      debrisList.push({
+        x: x + (Math.random() - 0.5) * w,
+        y: y + (Math.random() - 0.5) * h,
+        vx: (Math.random() - 0.5) * 220,
+        vy: -Math.random() * 180 - 40,
+        size: Math.max(3, w / 2.5),
+        angle: Math.random() * TAU,
+        vAngle: (Math.random() - 0.5) * 12,
+        side: side,
+        alpha: 1,
+        life: 0.7 + Math.random() * 0.4
+      });
+    }
+  }
+
+  function spawnSparks(x, y, side, count = 12) {
+    for (let i = 0; i < count; i++) {
+      const angle = Math.random() * TAU;
+      const speed = 80 + Math.random() * 260;
+      sparksList.push({
+        x: x,
+        y: y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        side: side,
+        alpha: 1,
+        life: 0.35 + Math.random() * 0.35,
+        size: 1.5 + Math.random() * 2.5
+      });
+    }
+  }
+
+  function spawnRing(x, y, side) {
+    ringsList.push({
+      x: x,
+      y: y,
+      side: side,
+      r: 4,
+      maxR: 35 + Math.random() * 15,
+      alpha: 1,
+      life: 0.35
+    });
+  }
+
+  function spawnFloatingText(text, x, y, color, size = 16) {
+    if (!cfg.popups) return;
+    floatingTexts.push({
+      text: text,
+      x: x + (Math.random() - 0.5) * 20,
+      y: y,
+      vy: -70 - Math.random() * 30,
+      color: color,
+      size: size,
+      alpha: 1,
+      life: 0.75
+    });
+  }
+
+  function spawnVictoryConfetti() {
+    if (!cfg.confetti) return;
+    for (let i = 0; i < 90; i++) {
+      confettiList.push({
+        x: W / 2 + (Math.random() - 0.5) * 300,
+        y: H / 2 - 50 + (Math.random() - 0.5) * 150,
+        vx: (Math.random() - 0.5) * 350,
+        vy: -Math.random() * 300 - 80,
+        size: 5 + Math.random() * 6,
+        color: ['#00f0ff', '#ff007f', '#ffd700', '#ffffff', '#10b981'][Math.floor(Math.random() * 5)],
+        angle: Math.random() * TAU,
+        vAngle: (Math.random() - 0.5) * 10,
+        life: 3.5
+      });
+    }
+  }
+
+  // ==========================================
+  // SIMULATION STATE
+  // ==========================================
+  let compiledA = null;
+  let compiledB = null;
+  let balls = [];
+  let blocks = [[], []];
+  let hits = [0, 0];
+  let currentN = [1, 1];
+  let truePopulation = [1n, 1n];
+
+  let simTime = 0;
+  let isPlaying = false;
+  let isRecording = false;
+  let battleWinner = -1; // -1 none, 0 side A, 1 side B, 2 tie
+  let battleEndTime = 0;
+  let rafId = null;
+  let lastFrameTime = 0;
+  let isSlowMo = false;
+  let slowMoTimer = 0;
+
+  // Maximum physically rendered balls (fluid 60/120 FPS on screen)
+  const MAX_PHYSICAL_SWARM = 280;
+
+  // ==========================================
+  // ULTRA-PERFORMANCE SPRITE CACHE (ZERO LAG GLOW)
+  // ==========================================
+  const spriteCache = {};
+  function getCachedBallSprite(side, radius) {
+    const rInt = Math.max(3, Math.round(radius));
+    const key = `${side}_${rInt}`;
+    if (spriteCache[key]) return spriteCache[key];
+
+    const padding = Math.ceil(rInt * 1.5 + 4);
+    const size = (rInt + padding) * 2;
+    const can = document.createElement('canvas');
+    can.width = size;
+    can.height = size;
+    const sctx = can.getContext('2d');
+    const center = size / 2;
+    const clr = side === 0 ? COLORS.cyan : COLORS.pink;
+
+    // Outer glow
+    sctx.shadowColor = clr;
+    sctx.shadowBlur = rInt * 1.2;
+
+    const grad = sctx.createRadialGradient(
+      center - rInt * 0.3, center - rInt * 0.3, rInt * 0.1,
+      center, center, rInt
+    );
+    grad.addColorStop(0, '#ffffff');
+    grad.addColorStop(0.35, clr);
+    grad.addColorStop(1, side === 0 ? '#024361' : '#570228');
+
+    sctx.fillStyle = grad;
+    sctx.beginPath();
+    sctx.arc(center, center, rInt, 0, TAU);
+    sctx.fill();
+
+    sctx.strokeStyle = 'rgba(255,255,255,0.7)';
+    sctx.lineWidth = 1;
+    sctx.stroke();
+
+    spriteCache[key] = { canvas: can, size, half: center };
+    return spriteCache[key];
+  }
+
+  // Blocks are visually static until shattered, so reuse their sprite.
+  const blockSpriteCache = new Map();
+  function getBlockSprite(side,w,h) {
+    const key = `${side}_${w.toFixed(3)}_${h.toFixed(3)}`;
+    if (blockSpriteCache.has(key)) return blockSpriteCache.get(key);
+    const padding = 14;
+    const sprite = document.createElement('canvas');
+    sprite.width = Math.ceil(w+padding*2);
+    sprite.height = Math.ceil(h+padding*2);
+    const bctx = sprite.getContext('2d');
+    const x = padding, y = padding;
+    bctx.shadowColor = side === 0 ? COLORS.cyanGlow : COLORS.pinkGlow;
+    bctx.shadowBlur = 10;
+    const grad = bctx.createLinearGradient(x, y, x+w, y+h);
+    grad.addColorStop(0,side===0?'#00a3cc':'#cc0066');
+    grad.addColorStop(1,side===0?'#00f0ff':'#ff007f');
+    bctx.fillStyle = grad;
+    bctx.beginPath();
+    bctx.roundRect(x,y,w,h,3.5);
+    bctx.fill();
+    bctx.shadowBlur = 0;
+    bctx.strokeStyle = '#ffffff';
+    bctx.lineWidth = 1;
+    bctx.stroke();
+    const result={canvas:sprite,padding};
+    blockSpriteCache.set(key,result);
+    return result;
+  }
+
+  function initArena() {
+    simTime = 0;
+    hits = [0, 0];
+    currentN = [cfg.startN, cfg.startN];
+    battleWinner = -1;
+    battleEndTime = 0;
+    screenShakeAmount = 0;
+    isSlowMo = false;
+    slowMoTimer = 0;
+
+    debrisList = [];
+    sparksList = [];
+    ringsList = [];
+    floatingTexts = [];
+    confettiList = [];
+
+    // Compile formulas
+    try {
+      compiledA = parseMathExpression(cfg.formulaA);
+      $('previewA').textContent = `✓ n=${cfg.startN}: ${formatBigNumber(compiledA.bigVal(cfg.startN))} balls`;
+      $('previewA').classList.remove('error');
+    } catch (e) {
+      $('previewA').textContent = '⚠ ' + e.message;
+      $('previewA').classList.add('error');
+      compiledA = null;
+    }
+
+    try {
+      compiledB = parseMathExpression(cfg.formulaB);
+      $('previewB').textContent = `✓ n=${cfg.startN}: ${formatBigNumber(compiledB.bigVal(cfg.startN))} balls`;
+      $('previewB').classList.remove('error');
+    } catch (e) {
+      $('previewB').textContent = '⚠ ' + e.message;
+      $('previewB').classList.add('error');
+      compiledB = null;
+    }
+
+    blocks = createBlockPattern(cfg.pattern, cfg.blockCount);
+    balls = [];
+    updateBallPopulations(true);
+
+    updateUIState();
+    drawFrame();
+  }
+
+  // Sync ball swarms seamlessly without EVER crashing or stopping!
+  function updateBallPopulations(isFirst = false) {
+    if (!compiledA || !compiledB) return;
+
+    for (let side = 0; side < 2; side++) {
+      const comp = side === 0 ? compiledA : compiledB;
+      const n = currentN[side];
+      const targetExact = comp.bigVal(n);
+      truePopulation[side] = targetExact;
+
+      const existing = balls.filter(b => b.side === side);
+      const currentPhysical = existing.length;
+
+      let desiredPhysical = Number(targetExact);
+      let multiplier = 1;
+
+      if (desiredPhysical > MAX_PHYSICAL_SWARM) {
+        multiplier = desiredPhysical / MAX_PHYSICAL_SWARM;
+        desiredPhysical = MAX_PHYSICAL_SWARM;
+      }
+      desiredPhysical = Math.max(1, Math.min(MAX_PHYSICAL_SWARM, desiredPhysical));
+
+      if (currentPhysical < desiredPhysical) {
+        const toAdd = desiredPhysical - currentPhysical;
+        const centerX = side === 0 ? 140 : 400;
+        const radius = Math.max(4.5, Math.min(14, 16 - Math.log2(Math.max(1, desiredPhysical)) * 1.2));
+
+        for (const b of balls) {
+          if (b.side === side) b.r = radius;
+        }
+
+        for (let i = 0; i < toAdd; i++) {
+          const angle = -Math.PI / 2 + (Math.random() - 0.5) * 1.6;
+          const speed = (280 + Math.random() * 120) * cfg.speed;
+          balls.push({
+            side: side,
+            x: centerX + (Math.random() - 0.5) * 80,
+            y: isFirst ? 740 + (Math.random() - 0.5) * 30 : 720,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+            r: radius,
+            multiplier: multiplier,
+            trail: []
+          });
+        }
+      } else if (currentPhysical > desiredPhysical) {
+        let toRemove = currentPhysical - desiredPhysical;
+        for (let i = balls.length - 1; i >= 0 && toRemove > 0; i--) {
+          if (balls[i].side === side) {
+            balls.splice(i, 1);
+            toRemove--;
+          }
+        }
+      }
+    }
+  }
+
+  function destroyBlock(block, ball) {
+    if (block.dead) return;
+    block.dead = true;
+    const side = block.side;
+    hits[side]++;
+    currentN[side] = cfg.startN + hits[side];
+
+    // Cap dynamic visual debris to preserve high FPS during swarm frenzy
+    if (debrisList.length < 80) {
+      spawnDebris(block.x, block.y, block.w, block.h, side);
+    }
+    if (sparksList.length < 90) {
+      spawnSparks(block.x, block.y, side, balls.length > 100 ? 6 : 12);
+    }
+    if (ringsList.length < 20) {
+      spawnRing(block.x, block.y, side);
+    }
+
+    if (cfg.shake) {
+      screenShakeAmount = Math.min(12, screenShakeAmount + 3.5);
+    }
+
+    audio.playHit(side, Math.hypot(ball.vx, ball.vy));
+
+    if (hits[side] % 5 === 0) {
+      spawnFloatingText(`n = ${currentN[side]}!`, block.x, block.y, side === 0 ? COLORS.cyan : COLORS.pink, 18);
+      audio.playLevelUp(side);
+    }
+
+    updateBallPopulations();
+
+    const remaining = blocks[side].filter(b => !b.dead).length;
+    if (remaining === 0 && battleWinner === -1) {
+      battleWinner = side;
+      battleEndTime = simTime;
+      audio.playVictory();
+      spawnVictoryConfetti();
+
+      if (cfg.slowMo) {
+        isSlowMo = true;
+        slowMoTimer = 0.8;
+      }
+
+      $('battleStatusLabel').textContent = `VICTORY: ${side === 0 ? 'BLUE' : 'PINK'} TEAM WINS!`;
+    }
+  }
+
+  function physicsStep(dt) {
+    simTime += dt;
+
+    for (let i = debrisList.length - 1; i >= 0; i--) {
+      const d = debrisList[i];
+      d.vy += 420 * dt;
+      d.x += d.vx * dt;
+      d.y += d.vy * dt;
+      d.angle += d.vAngle * dt;
+      d.life -= dt;
+      if (d.life <= 0) debrisList.splice(i, 1);
+    }
+
+    for (let i = sparksList.length - 1; i >= 0; i--) {
+      const s = sparksList[i];
+      s.x += s.vx * dt;
+      s.y += s.vy * dt;
+      s.life -= dt;
+      if (s.life <= 0) sparksList.splice(i, 1);
+    }
+
+    for (let i = ringsList.length - 1; i >= 0; i--) {
+      const r = ringsList[i];
+      r.r += (r.maxR - r.r) * 12 * dt;
+      r.life -= dt;
+      if (r.life <= 0) ringsList.splice(i, 1);
+    }
+
+    for (let i = floatingTexts.length - 1; i >= 0; i--) {
+      const f = floatingTexts[i];
+      f.y += f.vy * dt;
+      f.life -= dt;
+      f.alpha = Math.max(0, f.life / 0.75);
+      if (f.life <= 0) floatingTexts.splice(i, 1);
+    }
+
+    for (let i = confettiList.length - 1; i >= 0; i--) {
+      const c = confettiList[i];
+      c.vy += 220 * dt;
+      c.x += c.vx * dt;
+      c.y += c.vy * dt;
+      c.angle += c.vAngle * dt;
+      c.life -= dt;
+      if (c.life <= 0) confettiList.splice(i, 1);
+    }
+
+    if (screenShakeAmount > 0) {
+      screenShakeAmount = Math.max(0, screenShakeAmount - 20 * dt);
+    }
+
+    // Graceful victory celebration timing:
+    // Display victory card smoothly, letting confetti fall, and stop 2.0s after victory text appears
+    const VICTORY_HOLD_DURATION = 2.0;
+    if (battleWinner !== -1 && simTime >= battleEndTime + VICTORY_HOLD_DURATION) {
+      simTime = battleEndTime + VICTORY_HOLD_DURATION;
+      return;
+    }
+
+    const boundsA = { left: 24, right: 260, top: 310, bottom: 790 };
+    const boundsB = { left: 280, right: 516, top: 310, bottom: 790 };
+    const gravity = 80;
+
+    for (let i = 0; i < balls.length; i++) {
+      const b = balls[i];
+      const bounds = b.side === 0 ? boundsA : boundsB;
+
+      b.vy += gravity * dt;
+      b.x += b.vx * dt;
+      b.y += b.vy * dt;
+
+      if (b.x - b.r < bounds.left) {
+        b.x = bounds.left + b.r;
+        b.vx = Math.abs(b.vx);
+      } else if (b.x + b.r > bounds.right) {
+        b.x = bounds.right - b.r;
+        b.vx = -Math.abs(b.vx);
+      }
+
+      if (b.y - b.r < bounds.top) {
+        b.y = bounds.top + b.r;
+        b.vy = Math.abs(b.vy);
+      }
+
+      if (b.y + b.r > bounds.bottom) {
+        b.y = bounds.bottom - b.r;
+        b.vy = -Math.max(300 * cfg.speed, Math.abs(b.vy));
+        if (Math.abs(b.vx) < 50) {
+          b.vx += (Math.random() - 0.5) * 160;
+        }
+      }
+
+      if (cfg.trails && balls.length < 50 && Math.random() < 0.35) {
+        b.trail.push({ x: b.x, y: b.y });
+        if (b.trail.length > 5) b.trail.shift();
+      } else if (b.trail.length > 0) {
+        b.trail.shift();
+      }
+
+      // SPATIAL CULLING: Only check collisions if ball is in block elevation zone
+      if (b.y < 580) {
+        const sideBlocks = blocks[b.side];
+        for (let j = 0; j < sideBlocks.length; j++) {
+          const blk = sideBlocks[j];
+          if (blk.dead) continue;
+
+          const halfW = blk.w / 2;
+          const halfH = blk.h / 2;
+          const distX = Math.abs(b.x - blk.x);
+          const distY = Math.abs(b.y - blk.y);
+
+          if (distX > (halfW + b.r) || distY > (halfH + b.r)) continue;
+
+          if (distX <= halfW || distY <= halfH) {
+            if (distX / halfW > distY / halfH) {
+              b.vx = (b.x < blk.x) ? -Math.abs(b.vx) : Math.abs(b.vx);
+            } else {
+              b.vy = (b.y < blk.y) ? -Math.abs(b.vy) : Math.abs(b.vy);
+            }
+            destroyBlock(blk, b);
+            break;
+          }
+
+          const cornerDistSq = Math.pow(distX - halfW, 2) + Math.pow(distY - halfH, 2);
+          if (cornerDistSq <= b.r * b.r) {
+            b.vx = -b.vx;
+            b.vy = -b.vy;
+            destroyBlock(blk, b);
+            break;
+          }
+        }
+      }
+    }
+  }
+
+  // Cache the unchanging backdrop once: no gradients/grid geometry per frame.
+  const backdropCanvas = document.createElement('canvas');
+  backdropCanvas.width = W;
+  backdropCanvas.height = H;
+  function prepareBackdrop() {
+    const ctx = backdropCanvas.getContext('2d', {alpha:false});
+    // 1. Deep Cyberpunk Radial Gradient Background
+    const bgGrad = ctx.createRadialGradient(W / 2, 250, 20, W / 2, 500, 600);
+    bgGrad.addColorStop(0, '#0c162d');
+    bgGrad.addColorStop(0.5, '#050914');
+    bgGrad.addColorStop(1, '#020308');
+    ctx.fillStyle = bgGrad;
+    ctx.fillRect(0, 0, W, H);
+
+    // Subtle Laser Background Grid
+    ctx.strokeStyle = 'rgba(0, 240, 255, 0.035)';
+    ctx.lineWidth = 1;
+    for (let x = 20; x < W; x += 30) {
+      ctx.beginPath();
+      ctx.moveTo(x, 240);
+      ctx.lineTo(x, 810);
+      ctx.stroke();
+    }
+    for (let y = 250; y < 810; y += 30) {
+      ctx.beginPath();
+      ctx.moveTo(20, y);
+      ctx.lineTo(W - 20, y);
+      ctx.stroke();
+    }
+
+    // 2. Battle Arenas (Left Cyan & Right Pink)
+    ctx.fillStyle = 'rgba(0, 240, 255, 0.03)';
+    ctx.strokeStyle = 'rgba(0, 240, 255, 0.35)';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.roundRect(24, 310, 236, 480, 16);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.fillStyle = 'rgba(255, 0, 127, 0.03)';
+    ctx.strokeStyle = 'rgba(255, 0, 127, 0.35)';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.roundRect(280, 310, 236, 480, 16);
+    ctx.fill();
+    ctx.stroke();
+
+    // Laser Center Split Line
+    ctx.setLineDash([8, 8]);
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(W / 2, 310);
+    ctx.lineTo(W / 2, 790);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+  }
+  prepareBackdrop();
+
+  // ==========================================
+  // VIRAL 9:16 RENDERING ENGINE
+  // ==========================================
+  function drawFrame() {
+    ctx.save();
+
+    if (screenShakeAmount > 0) {
+      const dx = (Math.random() - 0.5) * screenShakeAmount;
+      const dy = (Math.random() - 0.5) * screenShakeAmount;
+      ctx.translate(dx, dy);
+    }
+
+    ctx.drawImage(backdropCanvas, 0, 0);
+
+    // 3. Glowing Blocks (reused sprite cache)
+    for (let side = 0; side < 2; side++) {
+      const sideBlocks = blocks[side];
+      for (let i = 0; i < sideBlocks.length; i++) {
+        const blk = sideBlocks[i];
+        if (blk.dead) continue;
+        const sprite = getBlockSprite(side,blk.w,blk.h);
+        ctx.drawImage(sprite.canvas,blk.x-blk.w/2-sprite.padding,blk.y-blk.h/2-sprite.padding);
+      }
+    }
+
+    // 4. Particles & Balls
+    for (const r of ringsList) {
+      ctx.save();
+      ctx.strokeStyle = r.side === 0 ? COLORS.cyan : COLORS.pink;
+      ctx.lineWidth = 2;
+      ctx.globalAlpha = Math.max(0, r.life / 0.35);
+      ctx.beginPath();
+      ctx.arc(r.x, r.y, r.r, 0, TAU);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    for (const d of debrisList) {
+      ctx.save();
+      ctx.translate(d.x, d.y);
+      ctx.rotate(d.angle);
+      ctx.fillStyle = d.side === 0 ? COLORS.cyan : COLORS.pink;
+      ctx.globalAlpha = Math.max(0, d.life / 0.7);
+      ctx.fillRect(-d.size/2, -d.size/2, d.size, d.size);
+      ctx.restore();
+    }
+
+    for (const s of sparksList) {
+      ctx.save();
+      ctx.fillStyle = s.side === 0 ? '#b8f8ff' : '#ffb8de';
+      ctx.shadowColor = s.side === 0 ? COLORS.cyan : COLORS.pink;
+      ctx.shadowBlur = 8;
+      ctx.globalAlpha = Math.max(0, s.life / 0.35);
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.size, 0, TAU);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    // Draw Balls with Ultra-Fast Sprite Caching
+    for (let i = 0; i < balls.length; i++) {
+      const b = balls[i];
+      const clr = b.side === 0 ? COLORS.cyan : COLORS.pink;
+
+      if (b.trail.length > 1) {
+        ctx.beginPath();
+        for (let t = 0; t < b.trail.length - 1; t++) {
+          ctx.moveTo(b.trail[t].x, b.trail[t].y);
+          ctx.lineTo(b.trail[t+1].x, b.trail[t+1].y);
+        }
+        ctx.strokeStyle = clr;
+        ctx.lineWidth = b.r * 0.7;
+        ctx.globalAlpha = 0.25;
+        ctx.stroke();
+        ctx.globalAlpha = 1.0;
+      }
+
+      // Fast blit from pre-rendered glow sprite (Zero runtime shadow/blur cost)
+      const sprite = getCachedBallSprite(b.side, b.r);
+      ctx.drawImage(sprite.canvas, b.x - sprite.half, b.y - sprite.half);
+    }
+
+    // Floating Numbers
+    for (const f of floatingTexts) {
+      ctx.save();
+      ctx.globalAlpha = f.alpha;
+      ctx.fillStyle = f.color;
+      ctx.shadowColor = f.color;
+      ctx.shadowBlur = 10;
+      ctx.font = `900 ${f.size}px 'Outfit', sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.fillText(f.text, f.x, f.y);
+      ctx.restore();
+    }
+
+    // 5. VIRAL HUD OVERLAY (INSTAGRAM REELS SAFE ZONES)
+    drawViralHUD();
+
+    // 6. Victory Confetti
+    for (const c of confettiList) {
+      ctx.save();
+      ctx.translate(c.x, c.y);
+      ctx.rotate(c.angle);
+      ctx.fillStyle = c.color;
+      ctx.fillRect(-c.size/2, -c.size/2, c.size, c.size * 1.5);
+      ctx.restore();
+    }
+
+    ctx.restore();
+  }
+
+  function drawViralHUD() {
+    ctx.save();
+    // Glassmorphism Top Banner (Centering Math Arena Logo)
+    ctx.fillStyle = 'rgba(12, 20, 36, 0.75)';
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.roundRect(24, 25, W - 48, 64, 16);
+    ctx.fill();
+    ctx.stroke();
+
+    // MATH ARENA Logo - Perfectly centered
+    ctx.font = "900 28px 'Outfit', sans-serif";
+    ctx.textBaseline = 'middle';
+    ctx.textAlign = 'center';
+
+    const brandA = 'MATH ';
+    const brandB = 'ARENA';
+    const totalW = ctx.measureText(brandA + brandB).width;
+    const halfW = totalW / 2;
+    const startX = (W / 2) - halfW;
+
+    ctx.textAlign = 'left';
+    ctx.fillStyle = COLORS.cyan;
+    ctx.shadowColor = COLORS.cyan;
+    ctx.shadowBlur = 12;
+    ctx.fillText(brandA, startX, 57);
+
+    const wA = ctx.measureText(brandA).width;
+    ctx.fillStyle = COLORS.pink;
+    ctx.shadowColor = COLORS.pink;
+    ctx.fillText(brandB, startX + wA, 57);
+    ctx.shadowBlur = 0;
+
+    // Main Viral Hook Headline - Prominent & Perfectly Centered
+    ctx.font = "900 23px 'Outfit', sans-serif";
+    ctx.fillStyle = '#ffffff';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'alphabetic';
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
+    ctx.shadowBlur = 8;
+    ctx.fillText(cfg.headline.toUpperCase(), W / 2, 134);
+    ctx.shadowBlur = 0;
+
+    // Left & Right HUD Cards
+    for (let side = 0; side < 2; side++) {
+      const cardX = side === 0 ? 24 : 280;
+      const cardW = 236;
+      const centerX = cardX + cardW / 2; // Exact geometrical center of the card (142 and 398)
+      const clr = side === 0 ? COLORS.cyan : COLORS.pink;
+      const formulaStr = side === 0 ? cfg.formulaA : cfg.formulaB;
+
+      ctx.fillStyle = 'rgba(10, 16, 30, 0.85)';
+      ctx.strokeStyle = clr;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.roundRect(cardX, 164, cardW, 126, 14);
+      ctx.fill();
+      ctx.stroke();
+
+      // Formula Title (Centered)
+      ctx.font = "900 26px 'Outfit', sans-serif";
+      ctx.fillStyle = clr;
+      ctx.textAlign = 'center';
+      ctx.fillText(formulaStr, centerX, 200);
+
+      // Level n (Centered)
+      ctx.font = "700 15px 'JetBrains Mono', monospace";
+      ctx.fillStyle = '#ffffff';
+      ctx.fillText(`LEVEL n = ${currentN[side]}`, centerX, 226);
+
+      // Total Balls (Centered)
+      const popStr = formatBigNumber(truePopulation[side]);
+      ctx.font = "800 19px 'Outfit', sans-serif";
+      ctx.fillStyle = '#ffd700';
+      ctx.fillText(`BALLS: ${popStr}`, centerX, 254);
+
+      // Remaining Blocks Bar (Centered in card)
+      const totalB = blocks[side].length;
+      const remainingB = blocks[side].filter(b => !b.dead).length;
+      const pct = Math.max(0, 1 - remainingB / totalB);
+
+      const barW = 200;
+      const barX = centerX - barW / 2;
+      const barY = 270;
+      ctx.fillStyle = 'rgba(255,255,255,0.12)';
+      ctx.beginPath();
+      ctx.roundRect(barX, barY, barW, 8, 4);
+      ctx.fill();
+
+      ctx.fillStyle = clr;
+      ctx.beginPath();
+      ctx.roundRect(barX, barY, Math.max(6, barW * pct), 8, 4);
+      ctx.fill();
+
+      // Blocks Left Under Arena (Centered in each arena)
+      ctx.font = "800 15px 'Outfit', sans-serif";
+      ctx.fillStyle = '#ffffff';
+      ctx.fillText(`${remainingB} BLOCKS LEFT`, centerX, 818);
+    }
+
+    // Victory Screen / Final Celebration with Smooth Fade-in & Scale Animation
+    if (battleWinner !== -1 && simTime >= battleEndTime) {
+      const timeSinceVictory = simTime - battleEndTime;
+      const progress = Math.min(1.0, timeSinceVictory / 0.35); // 350ms silky ease-out
+      const easeOut = 1 - Math.pow(1 - progress, 3);
+      const scale = 0.88 + 0.12 * easeOut;
+
+      const winClr = battleWinner === 0 ? COLORS.cyan : COLORS.pink;
+      const winName = battleWinner === 0 ? cfg.formulaA : cfg.formulaB;
+
+      ctx.save();
+      ctx.globalAlpha = easeOut;
+      ctx.translate(W / 2, 490);
+      ctx.scale(scale, scale);
+      ctx.translate(-W / 2, -490);
+
+      ctx.fillStyle = 'rgba(3, 7, 18, 0.92)';
+      ctx.strokeStyle = winClr;
+      ctx.lineWidth = 3;
+      ctx.shadowColor = winClr;
+      ctx.shadowBlur = 18;
+      ctx.beginPath();
+      ctx.roundRect(35, 410, W - 70, 160, 20);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.shadowBlur = 0;
+      ctx.font = "900 32px 'Outfit', sans-serif";
+      ctx.fillStyle = '#ffffff';
+      ctx.textAlign = 'center';
+      ctx.fillText(`🏆 ${winName} WINS!`, W / 2, 460);
+
+      ctx.font = "700 18px 'JetBrains Mono', monospace";
+      ctx.fillStyle = '#ffd700';
+      ctx.fillText(`TIME: ${battleEndTime.toFixed(2)}s · TOTAL ANNIHILATION`, W / 2, 495);
+
+      ctx.font = "800 16px 'Outfit', sans-serif";
+      ctx.fillStyle = winClr;
+      ctx.fillText(`FINAL POWER: ${formatBigNumber(truePopulation[battleWinner])} BALLS`, W / 2, 532);
+      ctx.restore();
+    }
+
+    // Final Call To Action (Bottom Safe Zone)
+    ctx.save();
+    ctx.fillStyle = 'rgba(9, 14, 26, 0.9)';
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.roundRect(24, 880, W - 48, 54, 14);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.font = "800 14px 'Outfit', sans-serif";
+    ctx.fillStyle = '#ffffff';
+    ctx.textAlign = 'center';
+    ctx.fillText(cfg.cta, W / 2, 912);
+    ctx.restore();
+
+    ctx.restore();
+  }
+
+  // ==========================================
+  // SHARED PREVIEW + EXPORT CLOCK
+  // One physics clock feeds both the visible canvas and the HD recorder.
+  // Actual elapsed wall time (not an artificially clamped 50ms frame)
+  // determines how fast the contest progresses.
+  // ==========================================
+  let exportCanvas = null;
+  let exportCtx = null;
+  let exportStream = null;
+  let recordingStopPending = false;
+  let exportedObjectUrl = null;
+  let recorderError = null;
+  let CAPTURE_FPS = 30;
+  let CAPTURE_WIDTH = 720;
+  let CAPTURE_HEIGHT = 1280;
+  const END_HOLD = 2.0;
+
+  function finishReached() {
+    return battleWinner !== -1 && simTime >= battleEndTime + END_HOLD - 0.00001;
+  }
+
+  function animationLoop(timestamp) {
+    if (!isPlaying) return;
+    if (!lastFrameTime) lastFrameTime = timestamp;
+    let elapsed = Math.max(0, (timestamp - lastFrameTime) / 1000);
+    lastFrameTime = timestamp;
+
+    // A long interruption usually means the tab was backgrounded: freeze
+    // instead of jumping the simulation ahead over unrecorded collisions.
+    // For normal 20-150ms heavy frames, catch up completely in small steps.
+    if (elapsed > 0.5) {
+      elapsed = 0;
+      if (isRecording) {
+        $('statusBar').textContent = '⚠ Scheda sospesa: mantienila in primo piano durante la registrazione.';
+      }
+    }
+
+    // Keep the same 120Hz physics integrator for preview and recording.
+    // This is the key fix: elapsed time is NOT capped to 0.05 seconds.
+    while (elapsed > 0.00000001 && !finishReached()) {
+      const step = Math.min(FIXED_STEP, elapsed);
+      physicsStep(step);
+      elapsed -= step;
+    }
+
+    drawFrame();
+    if (isRecording && exportCtx && exportCanvas) {
+      // Record at true 9:16 Full HD, independently of the CSS preview size.
+      // captureStream(CAPTURE_FPS) samples this canvas in real time.
+      exportCtx.drawImage(canvas, 0, 0, CAPTURE_WIDTH, CAPTURE_HEIGHT);
+    }
+    updateUIState();
+
+    if (finishReached()) {
+      isPlaying = false;
+      $('playBtn').textContent = '▶ Preview';
+      if (isRecording && !recordingStopPending) {
+        recordingStopPending = true;
+        // Let the encoder capture the final rendered frame and audio tail.
+        setTimeout(() => stopRecordingAndSave(), 180);
+      }
+    } else if (isPlaying) {
+      rafId = requestAnimationFrame(animationLoop);
+    }
+  }
+
+  function startPreview() {
+    if (isRecording) return;
+    if (isPlaying) {
+      isPlaying = false;
+      cancelAnimationFrame(rafId);
+      $('playBtn').textContent = '▶ Preview';
+      return;
+    }
+    if (battleWinner !== -1) initArena();
+    audio.init();
+    isPlaying = true;
+    lastFrameTime = 0;
+    $('playBtn').textContent = '⏸ Pause';
+    rafId = requestAnimationFrame(animationLoop);
+  }
+
+  function updateUIState() {
+    const mins = Math.floor(simTime / 60);
+    const secs = Math.floor(simTime % 60);
+    $('currentTimeLabel').textContent = `${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+    $('timelineScrubber').max = Math.max(30, Math.ceil(simTime + 1));
+    $('timelineScrubber').value = simTime;
+    $('totalTimeLabel').textContent = battleWinner === -1 ? 'LIVE' :
+      `${String(Math.floor((battleEndTime+END_HOLD)/60)).padStart(2,'0')}:${String(Math.floor((battleEndTime+END_HOLD)%60)).padStart(2,'0')}`;
+  }
+
+  // ==========================================
+  // FULL-HD REAL-TIME REEL RECORDER (60 FPS)
+  // captureStream(60), NOT captureStream(0): zero requires manual requestFrame
+  // and was the original cause of missing / non-fluid encoded frames.
+  // ==========================================
+  let mediaRecorder = null;
+  let recordedChunks = [];
+  let recordVideoTrack = null;
+  let recordingMime = '';
+  let lastExportBlob = null;
+  let lastExportName = '';
+
+  function exportName(extension) {
+    const part = x => String(x).replace(/[^a-z0-9()^+!_-]/gi, '_').slice(0,40);
+    return `Math_Arena_Reel_${part(cfg.formulaA)}_vs_${part(cfg.formulaB)}.${extension}`;
+  }
+
+  async function generateFullReel() {
+    if (isRecording) return;
+    if (!window.MediaRecorder || !HTMLCanvasElement.prototype.captureStream) {
+      $('statusBar').textContent = '⚠ Questo Safari non supporta la registrazione diretta da canvas. Prova Safari aggiornato su iOS recente, oppure esporta dal computer.';
+      return;
+    }
+    // Stop any existing preview to avoid two animation loops at once.
+    isPlaying = false;
+    cancelAnimationFrame(rafId);
+    readAllInputs();
+    initArena();
+    audio.init(true);
+    // Do not record invalid formulas as a successful mathematical battle.
+    if (!compiledA || !compiledB) {
+      $('statusBar').textContent = '⚠ Correggi le formule prima di registrare.';
+      return;
+    }
+    if (exportedObjectUrl) {
+      URL.revokeObjectURL(exportedObjectUrl);
+      exportedObjectUrl = null;
+    }
+    $('downloadWebmBackup').style.display = 'none';
+    $('iphoneShareBtn').classList.remove('visible');
+    lastExportBlob = null;
+    recordingStopPending = false;
+    recorderError = null;
+    const quality = $('exportQuality').value.match(/^(540x960|720x1280|1080x1920)x(30|60)$/);
+    CAPTURE_WIDTH = quality ? Number(quality[1].split('x')[0]) : 540;
+    CAPTURE_HEIGHT = quality ? Number(quality[1].split('x')[1]) : 960;
+    CAPTURE_FPS = quality ? Number(quality[2]) : 30;
+
+    exportCanvas = document.createElement('canvas');
+    exportCanvas.width = CAPTURE_WIDTH;
+    exportCanvas.height = CAPTURE_HEIGHT;
+    exportCtx = exportCanvas.getContext('2d', {alpha:false, desynchronized: true});
+    exportCtx.drawImage(canvas, 0, 0, CAPTURE_WIDTH, CAPTURE_HEIGHT);
+    try {
+      exportStream = exportCanvas.captureStream(CAPTURE_FPS);
+      recordVideoTrack = exportStream.getVideoTracks()[0];
+      if (cfg.sound && audio.outputDest) {
+        for (const track of audio.outputDest.stream.getAudioTracks()) exportStream.addTrack(track);
+      }
+    } catch(err) {
+      $('statusBar').textContent = '⚠ Impossibile avviare la cattura: ' + err.message;
+      cleanupRecording();
+      return;
+    }
+
+    const hasAudio = exportStream.getAudioTracks().length > 0;
+    const candidates = hasAudio ? [
+      'video/mp4;codecs="avc1.42E01E,mp4a.40.2"',
+      'video/mp4;codecs="avc1,opus"',
+      'video/mp4',
+      'video/webm;codecs=vp9,opus',
+      'video/webm;codecs=vp8,opus',
+      'video/webm'
+    ] : [
+      'video/mp4;codecs="avc1.42E01E"',
+      'video/mp4',
+      'video/webm;codecs=vp9',
+      'video/webm;codecs=vp8',
+      'video/webm'
+    ];
+    recordedChunks = [];
+    recordingMime = '';
+    for (const candidate of candidates) {
+      try {
+        if (!MediaRecorder.isTypeSupported(candidate)) continue;
+        mediaRecorder = new MediaRecorder(exportStream, {
+          mimeType: candidate,
+          videoBitsPerSecond: 9000000,
+          audioBitsPerSecond: 128000
+        });
+        recordingMime = candidate;
+        break;
+      } catch(e) { mediaRecorder = null; }
+    }
+    if (!mediaRecorder) {
+      cleanupRecording();
+      $('statusBar').textContent = '⚠ Il browser non offre un codec di registrazione compatibile.';
+      return;
+    }
+
+    mediaRecorder.ondataavailable = event => {
+      if (event.data && event.data.size > 0) recordedChunks.push(event.data);
+    };
+    mediaRecorder.onerror = event => {
+      recorderError = event.error?.message || 'Errore di codifica video';
+      $('statusBar').textContent = '⚠ ' + recorderError;
+    };
+    mediaRecorder.onstop = () => {
+      const mime = mediaRecorder.mimeType || recordingMime;
+      const mp4 = mime.toLowerCase().includes('mp4');
+      const extension = mp4 ? 'mp4' : 'webm';
+      if (recordedChunks.length && !recorderError) {
+        const blob = new Blob(recordedChunks, { type: mime });
+        lastExportBlob = blob;
+        lastExportName = exportName(extension);
+        $('iphoneShareBtn').classList.add('visible');
+        exportedObjectUrl = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = exportedObjectUrl;
+        a.download = exportName(extension);
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        $('statusBar').textContent = mp4 ?
+          '✓ MP4 pronto. Su iPhone tocca Condividi / Salva video.' :
+          '✓ Video pronto, ma il browser ha prodotto WebM: potrebbe non essere importabile direttamente nell’app Foto.';
+        $('downloadWebmBackup').style.display = 'block';
+        $('downloadWebmBackup').textContent = `↓ Riscarica video ${extension.toUpperCase()}`;
+        $('downloadWebmBackup').onclick = () => {
+          const link = document.createElement('a');
+          link.href = exportedObjectUrl;
+          link.download = exportName(extension);
+          link.click();
+        };
+      } else {
+        $('statusBar').textContent = '⚠ Nessun video salvato: ' + (recorderError || 'registrazione vuota');
+      }
+      cleanupRecording();
+    };
+
+    try {
+      mediaRecorder.start(500);
+    } catch (err) {
+      cleanupRecording();
+      $('statusBar').textContent = '⚠ MediaRecorder non è partito: ' + err.message;
+      return;
+    }
+    isRecording = true;
+    $('recBadge').classList.add('active');
+    $('autoReelBtn').textContent = `● REGISTRAZIONE ${CAPTURE_FPS} FPS…`;
+    $('autoReelBtn').disabled = true;
+    $('playBtn').disabled = true;
+    $('resetBtn').disabled = true;
+    $('statusBar').textContent = `● Registrazione ${CAPTURE_WIDTH}×${CAPTURE_HEIGHT} · ${CAPTURE_FPS} FPS obiettivo, alla velocità originale.`;
+    isPlaying = true;
+    lastFrameTime = 0;
+    rafId = requestAnimationFrame(animationLoop);
+  }
+
+  function cleanupRecording() {
+    isRecording = false;
+    recordingStopPending = false;
+    pausedRecordingForVisibility = false;
+    $('recBadge').classList.remove('active');
+    $('autoReelBtn').textContent = '🎬 GENERATE FULL REEL (MP4)';
+    $('autoReelBtn').disabled = false;
+    $('playBtn').disabled = false;
+    $('resetBtn').disabled = false;
+    $('playBtn').textContent = '▶ Preview';
+    if (exportStream) for(const t of exportStream.getTracks()) t.stop();
+    exportStream = null;
+    recordVideoTrack = null;
+    exportCanvas = null;
+    exportCtx = null;
+    if (audio.keepAliveSource) {
+      try {audio.keepAliveSource.stop(); audio.keepAliveSource.disconnect();} catch(e) {}
+      audio.keepAliveSource = null;
+    }
+    if (audio.outputDest) audio.outputDest = null;
+  }
+
+  function stopRecordingAndSave() {
+    if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+      try { mediaRecorder.requestData(); } catch(e) {}
+      mediaRecorder.stop();
+    }
+  }
+
+  let pausedRecordingForVisibility = false;
+  document.addEventListener('visibilitychange', () => {
+    if (!isRecording || !mediaRecorder || recordingStopPending) return;
+    if (document.hidden && isPlaying) {
+      pausedRecordingForVisibility = true;
+      isPlaying = false;
+      cancelAnimationFrame(rafId);
+      try { if (mediaRecorder.state === 'recording') mediaRecorder.pause(); } catch(e) {}
+      if (audio.ctx) audio.ctx.suspend().catch(() => {});
+      $('statusBar').textContent = '⏸ Registrazione in pausa: torna a questa scheda per continuare.';
+    } else if (!document.hidden && pausedRecordingForVisibility) {
+      pausedRecordingForVisibility = false;
+      if (audio.ctx) audio.ctx.resume().catch(() => {});
+      try { if (mediaRecorder.state === 'paused') mediaRecorder.resume(); } catch(e) {}
+      isPlaying = true;
+      lastFrameTime = 0;
+      rafId = requestAnimationFrame(animationLoop);
+      $('statusBar').textContent = '● Registrazione ripresa senza accelerare il video.';
+    }
+  });
+
+  // Share must be triggered by a real tap on iOS; avoid attempting share from onstop.
+  $('iphoneShareBtn').addEventListener('click', async () => {
+    if (!lastExportBlob) return;
+    const file = new File([lastExportBlob], lastExportName, {type: lastExportBlob.type});
+    try {
+      if (navigator.canShare && navigator.canShare({files:[file]}) && navigator.share) {
+        await navigator.share({files:[file], title:'Math Arena Reel'});
+      } else if (exportedObjectUrl) {
+        window.open(exportedObjectUrl, '_blank');
+        $('statusBar').textContent = 'Se il video si apre, usa Condividi → Salva su File o Salva video (quando disponibile).';
+      }
+    } catch(err) {
+      if (err.name !== 'AbortError') $('statusBar').textContent = 'Condivisione non riuscita: '+err.message;
+    }
+  });
+
+  const iphone = /iPhone|iPod/i.test(navigator.userAgent);
+  if (iphone) {
+    $('exportQuality').value = '540x960x30';
+    if (!window.navigator.standalone && !window.matchMedia('(display-mode: standalone)').matches) {
+      $('iphoneInstallHint').classList.add('visible');
+    }
+  }
+  if ('serviceWorker' in navigator && location.protocol === 'https:') {
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
+  }
+
+  function captureThumbnail() {
+    const thumbCanvas = document.createElement('canvas');
+    thumbCanvas.width = 1080;
+    thumbCanvas.height = 1920;
+    const tCtx = thumbCanvas.getContext('2d', { alpha: false });
+    tCtx.drawImage(canvas, 0, 0, 1080, 1920);
+
+    const a = document.createElement('a');
+    a.href = thumbCanvas.toDataURL('image/png');
+    a.download = `Math_Arena_Thumbnail_${cfg.formulaA}_vs_${cfg.formulaB}.png`;
+    a.click();
+    $('statusBar').textContent = 'Full HD Thumbnail exported (1080×1920)!';
+  }
+
+  // ==========================================
+  // UI EVENT BINDING
+  // ==========================================
+  function bindUI() {
+    document.querySelectorAll('.preset-btn').forEach(btn => {
+      btn.onclick = () => {
+        if (isRecording) return;
+        document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const p = PRESETS[btn.dataset.preset];
+        if (p) {
+          $('formulaA').value = p.formulaA;
+          $('formulaB').value = p.formulaB;
+          $('startN').value = p.startN;
+          $('blockCount').value = p.blockCount;
+          $('wallPattern').value = p.pattern;
+          $('headlineText').value = p.headline;
+          readAllInputs();
+          initArena();
+        }
+      };
+    });
+
+    document.querySelectorAll('.chip').forEach(chip => {
+      chip.onclick = () => {
+        if (isRecording) return;
+        $('formulaA').value = chip.dataset.formula;
+        readAllInputs();
+        initArena();
+      };
+    });
+
+    $('formulaA').oninput = () => { if (isRecording) return; readAllInputs(); initArena(); };
+    $('formulaB').oninput = () => { if (isRecording) return; readAllInputs(); initArena(); };
+    $('startN').oninput = e => {
+      $('startNVal').textContent = e.target.value;
+      readAllInputs();
+      initArena();
+    };
+    $('blockCount').oninput = e => {
+      $('blockCountVal').textContent = e.target.value;
+      readAllInputs();
+      initArena();
+    };
+    $('wallPattern').onchange = () => { readAllInputs(); initArena(); };
+    $('gameSpeed').oninput = e => {
+      $('speedVal').textContent = e.target.value + '×';
+      readAllInputs();
+    };
+
+    $('headlineText').oninput = readAllInputs;
+    $('ctaText').oninput = readAllInputs;
+
+    $('soundToggle').onchange = readAllInputs;
+    $('shakeToggle').onchange = readAllInputs;
+    $('trailsToggle').onchange = readAllInputs;
+    $('popupsToggle').onchange = readAllInputs;
+    $('slowMoToggle').onchange = readAllInputs;
+    $('confettiToggle').onchange = readAllInputs;
+
+    $('playBtn').onclick = startPreview;
+    $('resetBtn').onclick = () => {
+      if (isRecording) return;
+      isPlaying = false;
+      cancelAnimationFrame(rafId);
+      $('playBtn').textContent = '▶ Preview';
+      initArena();
+    };
+    $('screenshotBtn').onclick = captureThumbnail;
+    $('autoReelBtn').onclick = generateFullReel;
+
+    $('timelineScrubber').oninput = e => {};
+  }
+
+  function readAllInputs() {
+    cfg.formulaA = $('formulaA').value;
+    cfg.formulaB = $('formulaB').value;
+    cfg.startN = Number($('startN').value);
+    cfg.blockCount = Number($('blockCount').value);
+    cfg.pattern = $('wallPattern').value;
+    cfg.speed = Number($('gameSpeed').value);
+    cfg.headline = $('headlineText').value;
+    cfg.cta = $('ctaText').value;
+    cfg.sound = $('soundToggle').checked;
+    cfg.shake = $('shakeToggle').checked;
+    cfg.trails = $('trailsToggle').checked;
+    cfg.popups = $('popupsToggle').checked;
+    cfg.slowMo = $('slowMoToggle').checked;
+    cfg.confetti = $('confettiToggle').checked;
+  }
+
+  bindUI();
+  readAllInputs();
+  initArena();
+})();
+</script>
+</body>
+</html>
